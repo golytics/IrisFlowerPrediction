@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
+import numpy as np
 
 
 #source: https://pypi.org/project/streamlit-analytics/
@@ -108,16 +109,37 @@ def user_input_features():
 df = user_input_features()
 
 
+# Selects only the first row (the user input data)
+df = df[:1]
 
 st.subheader('User Input parameters')
 st.write(df)
 
 # Here, we load the Iris dataset then assign the predictors (Sepal length, Sepal width, Petal length, Petal length) to X and
 # the target (the class index number : 0,1,2) to Y
-iris = datasets.load_iris()
-# print(iris)
-X = iris.data
-Y = iris.target
+# iris = datasets.load_iris()
+# # print(iris)
+# X = iris.data
+# # print(type(X))
+# Y = iris.target
+# print(type(Y))
+# #print(type(iris.target_names))
+
+
+iris_raw = pd.read_csv('iris.csv')
+X = np.array(iris_raw.drop(columns=['variety','target']))
+Y = np.array(iris_raw['target'])
+#iris = pd.concat([iris_raw['target'],X],axis=0)
+
+
+
+# iris=pd.read_csv('iris.csv')
+# print(type(iris))
+# # X = iris['sepal.length','sepal.width','petal.length','petal.width']
+# X=iris[["sepal_length","sepal_width","petal_length","petal_width"]]
+# Y = iris["variety"]
+
+
 
 # create the classifier and apply it on X to predict Y
 clf = RandomForestClassifier()
@@ -127,6 +149,8 @@ clf.fit(X, Y)
 # 3 classes (0= setoza, 1= versicolor, 2= virginica)
 prediction = clf.predict(df)
 prediction_proba = clf.predict_proba(df)
+#print(type(prediction_proba))
+#print(prediction_proba)
 
 
 # Note: everytime we change a parameter, the code builds the prediction model again and again. This uses the resources. We print this below
@@ -136,15 +160,17 @@ prediction_proba = clf.predict_proba(df)
 
 # print the classes (class index number and class names) in the tables
 st.subheader('Class Labels and Their Corresponding Index Numbers')
-st.write(iris.target_names)
+st.write(np.array(['setosa','versicolor','virginica']))
 
 st.subheader('Prediction Probability')
 st.write(prediction_proba)
 
 st.subheader('Prediction')
 #st.write(iris.target_names[prediction])
+iris_types = np.array(['setosa','versicolor','virginica'])
+#st.write(iris_types[prediction])
 
-predicted_class=iris.target_names[prediction]
+predicted_class=iris_types[prediction]
 
 html_str = f"""
 <h3 style="color:lightgreen;">{predicted_class[0]}</h3>
