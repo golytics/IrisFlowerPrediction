@@ -109,28 +109,25 @@ def user_input_features():
 df = user_input_features()
 
 
-# Selects only the first row (the user input data)
-df = df[:1]
 
 st.subheader('User Input parameters')
 st.write(df)
 
 # Here, we load the Iris dataset then assign the predictors (Sepal length, Sepal width, Petal length, Petal length) to X and
 # the target (the class index number : 0,1,2) to Y
-# iris = datasets.load_iris()
-# # print(iris)
-# X = iris.data
-# # print(type(X))
-# Y = iris.target
-# print(type(Y))
-# #print(type(iris.target_names))
+iris = datasets.load_iris()
+print(iris)
+# print(iris)
+X = iris.data
+#print(X)
+# print(type(X))
+Y = iris.target
+#print(type(iris.target_names))
 
 
-iris_raw = pd.read_csv('iris.csv')
-X = np.array(iris_raw.drop(columns=['variety','target']))
-Y = np.array(iris_raw['target'])
-#iris = pd.concat([iris_raw['target'],X],axis=0)
-
+# iris = pd.read_csv('iris.csv')
+# X = iris.drop(columns=['variety'])
+# Y = iris['variety']
 
 
 # iris=pd.read_csv('iris.csv')
@@ -138,8 +135,6 @@ Y = np.array(iris_raw['target'])
 # # X = iris['sepal.length','sepal.width','petal.length','petal.width']
 # X=iris[["sepal_length","sepal_width","petal_length","petal_width"]]
 # Y = iris["variety"]
-
-
 
 # create the classifier and apply it on X to predict Y
 clf = RandomForestClassifier()
@@ -167,10 +162,8 @@ st.write(prediction_proba)
 
 st.subheader('Prediction')
 #st.write(iris.target_names[prediction])
-iris_types = np.array(['setosa','versicolor','virginica'])
-#st.write(iris_types[prediction])
 
-predicted_class=iris_types[prediction]
+predicted_class=iris.target_names[prediction]
 
 html_str = f"""
 <h3 style="color:lightgreen;">{predicted_class[0]}</h3>
@@ -240,4 +233,4 @@ text-align: center;
 """
 st.markdown(footer, unsafe_allow_html=True)
 
-streamlit_analytics.stop_tracking(unsafe_password="forward1")
+streamlit_analytics.stop_tracking(unsafe_password="forwardgbrbreen12")
