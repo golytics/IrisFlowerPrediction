@@ -235,7 +235,7 @@ text-align: center;
 }
 </style>
 <div class="footer">
-<p>&copy; <a href="https://golytics.github.io/" target="_blank">GoLytics</a><br>Developed By: <a href="https://golytics.github.io/" target="_blank">Dr. Mohamed Gabr</a></p>
+<p>Developed By: <a href="https://golytics.github.io/" target="_blank">Dr. Mohamed Gabr</a></p>
 </div>
 """
 st.markdown(footer, unsafe_allow_html=True)
